@@ -45,8 +45,66 @@
         <div class="footer-text">「 選擇一段記憶，走進去。 」</div>
     </div>
 
+    <button id="settings-btn" class="settings-btn" onclick="toggleSettings()" title="設定" style="position: absolute; top: 20px; right: 20px; background: transparent; color: var(--color-bg); font-size: 1.5rem; border: none; cursor: pointer; z-index: 1000;">⚙️</button>
+
+    <div id="settings-modal" style="display: none; position: absolute; top: 60px; right: 20px; background: rgba(0,0,0,0.8); padding: 20px; border: 1px solid var(--color-accent); z-index: 1000; border-radius: 8px; width: 180px;">
+        <h3 style="margin-top: 0; color: var(--color-accent); text-align: center; border-bottom: 1px solid var(--color-accent); padding-bottom: 10px;">設定</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span style="color: #fff;">背景音樂</span>
+            <button id="music-toggle" class="action-btn" onclick="toggleMusic()" style="padding: 5px 10px;">🔇 關</button>
+        </div>
+        <div style="text-align: center;">
+            <button class="action-btn" onclick="toggleSettings()">關閉</button>
+        </div>
+    </div>
+
     <script>
+        let bgm = null;
+        let musicPlaying = false;
+
+        function initAudio() {
+            bgm = new Audio('assets/audio/bgm_home.mp3');
+            bgm.loop = true;
+            
+            const startAudio = () => {
+                if (!musicPlaying) {
+                    bgm.play().then(() => {
+                        musicPlaying = true;
+                        updateToggleBtn();
+                    }).catch(e => console.log('Autoplay prevented', e));
+                }
+                document.body.removeEventListener('click', startAudio);
+            };
+            document.body.addEventListener('click', startAudio);
+        }
+
+        function updateToggleBtn() {
+            const toggleBtn = document.getElementById('music-toggle');
+            if(toggleBtn) toggleBtn.textContent = musicPlaying ? '🔊 開' : '🔇 關';
+        }
+
+        function toggleSettings() {
+            const modal = document.getElementById('settings-modal');
+            if (modal) {
+                modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function toggleMusic() {
+            if (!bgm) initAudio();
+            
+            if (musicPlaying) {
+                bgm.pause();
+                musicPlaying = false;
+            } else {
+                bgm.play().catch(e => console.log('Play prevented', e));
+                musicPlaying = true;
+            }
+            updateToggleBtn();
+        }
+
         window.addEventListener('load', () => {
+            initAudio();
             const overlay = document.getElementById('transition-overlay');
             setTimeout(() => {
                 overlay.classList.add('fade-in');
@@ -57,6 +115,17 @@
             const overlay = document.getElementById('transition-overlay');
             overlay.classList.remove('fade-in');
             overlay.classList.add('fade-out');
+            
+            // Fade out audio
+            if (bgm && !bgm.paused) {
+                let vol = bgm.volume;
+                let fade = setInterval(() => {
+                    vol = Math.max(0, vol - 0.1);
+                    bgm.volume = vol;
+                    if (vol === 0) clearInterval(fade);
+                }, 100);
+            }
+
             setTimeout(() => {
                 window.location.href = url;
             }, 1000);
