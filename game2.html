@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沉默的繼承 - 記憶的迴廊</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style2.css?v=3">
+</head>
+<body>
+
+<div id="game-container">
+    <a href="#" class="back-home-btn" onclick="GameController.goHome()">← 返回迴廊</a>
+    <button id="settings-btn" class="settings-btn" onclick="GameController.toggleSettings()" title="設定">⚙️</button>
+
+    <!-- 設定對話框 -->
+    <div id="settings-modal" style="display: none; position: absolute; top: 70px; right: 20px; background: var(--color-vn-box, rgba(26, 26, 46, 0.95)); padding: 20px; border: 2px solid var(--color-accent); z-index: 1000; border-radius: 8px; width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <h3 style="margin-top: 0; color: var(--color-accent); text-align: center; border-bottom: 1px solid var(--color-accent); padding-bottom: 10px;">設定</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span style="color: var(--color-text, #fff);">背景音樂</span>
+            <button id="music-toggle" class="action-btn" onclick="GameController.toggleMusic()" style="padding: 5px 10px;">🔇 關</button>
+        </div>
+        <div style="text-align: center;">
+            <button class="action-btn" onclick="GameController.toggleSettings()">關閉</button>
+        </div>
+    </div>
+
+    <div id="scene-view"></div>
+    <div id="transition-overlay" class="active"></div>
+
+    <!-- 顯示對話框按鈕 (隱藏模式下出現) -->
+    <button id="show-vn-btn" onclick="GameController.toggleVNBox(false)">顯示對話框</button>
+
+    <!-- VN 對話框 -->
+    <div id="vn-box">
+        <button class="toggle-vision-btn" onclick="GameController.toggleVNBox(true)">隱藏文字框</button>
+        <div id="vn-text" class="vn-text"></div>
+        <div id="vn-choices-container" class="vn-choices"></div>
+        <div id="vn-input-container" class="vn-input-area" style="display: none;">
+            <input type="text" id="vn-input" class="input-style" placeholder="請輸入...">
+            <button class="action-btn" id="vn-input-submit">確認</button>
+        </div>
+    </div>
+
+    <!-- 道具與線索欄 -->
+    <div id="inventory-bar">
+        <div class="inventory-title">持有物品</div>
+        <div id="inventory-list" class="inventory-items"></div>
+        <button class="action-btn clue-btn" onclick="GameController.showClues()">線索筆記</button>
+    </div>
+
+    <!-- 物品說明框 -->
+    <div id="item-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--color-vn-box); padding: 20px; border: 2px solid var(--color-accent); z-index: 1000; border-radius: 8px; text-align: center; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <div id="item-modal-icon" style="font-size: 3rem; margin-bottom: 10px;"></div>
+        <div id="item-modal-name" style="font-weight: bold; margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid var(--color-accent); padding-bottom: 5px;"></div>
+        <div id="item-modal-desc" style="line-height: 1.5; margin-bottom: 20px;"></div>
+        <button class="action-btn" onclick="document.getElementById('item-modal').style.display='none'">關閉</button>
+    </div>
+
+    <!-- 線索筆記框 -->
+    <div id="clue-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--color-vn-box); padding: 20px; border: 2px solid var(--color-accent); z-index: 1000; border-radius: 8px; width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <h2 style="margin-top: 0; color: var(--color-accent); border-bottom: 1px solid var(--color-accent); padding-bottom: 10px;">跨關卡線索筆記</h2>
+        <ul id="clue-list" style="line-height: 1.6; padding-left: 20px; color: var(--color-text);"></ul>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="action-btn" onclick="document.getElementById('clue-modal').style.display='none'">關閉</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/state2.js?v=2"></script>
+<script src="js/scenes2.js?v=2"></script>
+<script src="js/game2.js?v=2"></script>
+
+</body>
+</html>

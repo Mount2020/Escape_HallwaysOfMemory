@@ -1,0 +1,200 @@
+:root {
+  --color-bg: #fdf6ec;
+  --color-text: #3b2f2f;
+  --color-accent: #c8a96e;
+  --color-shadow: rgba(59, 47, 47, 0.4);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Noto Serif JP', serif;
+    background-color: #000;
+    color: var(--color-text);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.background-container {
+    position: fixed;
+    top: -10px; left: -10px; right: -10px; bottom: -10px;
+    background-image: url('../assets/scenes/opening.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px) brightness(0.5);
+    z-index: -1;
+}
+
+#transition-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #000;
+    z-index: 999;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+    opacity: 1; /* Initially black */
+}
+
+#transition-overlay.fade-in {
+    opacity: 0;
+}
+
+#transition-overlay.fade-out {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10;
+}
+
+.game-title {
+    font-size: 3.5rem;
+    color: var(--color-bg);
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    margin-bottom: 60px;
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: titleFadeIn 2.5s ease forwards 0.5s;
+    font-weight: 400;
+}
+
+@keyframes titleFadeIn {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    opacity: 0;
+    animation: cardsFadeIn 2s ease forwards 1.2s;
+}
+
+@keyframes cardsFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.game-card {
+    background-image: radial-gradient(circle, var(--color-bg) 0%, #f4eee1 100%);
+    width: 320px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--color-shadow);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+    border: 2px solid transparent;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    border-color: var(--color-accent);
+}
+
+.card-thumbnail {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.card-thumbnail::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4));
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.1em;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.badge-completed { background-color: #6a7f72; }
+.badge-new { background-color: #a84f4f; }
+
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+    box-sizing: border-box;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    margin: 0 0 10px 0;
+    color: var(--color-text);
+}
+
+.card-difficulty {
+    font-size: 0.95rem;
+    color: var(--color-accent);
+    margin-bottom: 15px;
+    letter-spacing: 0.1em;
+}
+
+.card-desc {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #5d4f4f;
+    margin: 0 0 20px 0;
+}
+
+.action-btn {
+    font-family: inherit;
+    font-size: 1.05rem;
+    padding: 10px 0;
+    width: 100%;
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.1em;
+}
+
+.game-card:hover .action-btn {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+}
+
+.footer-text {
+    margin-top: 60px;
+    color: var(--color-bg);
+    opacity: 0;
+    letter-spacing: 0.2em;
+    font-size: 1rem;
+    animation: fadePulse 4s infinite 3s;
+}
+
+@keyframes fadePulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}

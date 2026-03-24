@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記憶的迴廊 - 選擇記憶</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <div id="transition-overlay"></div>
+    <div class="background-container"></div>
+    
+    <div class="main-content">
+        <h1 class="game-title">記憶的迴廊</h1>
+        
+        <div class="card-container">
+            <!-- Game 1 -->
+            <div class="game-card" onclick="transitionTo('game1.html')">
+                <div class="card-thumbnail" style="background-image: url('assets/scenes/opening.png')">
+                    <span class="badge badge-completed">已完成</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">《記憶的回聲》</h2>
+                    <div class="card-difficulty">難度：★★☆☆☆</div>
+                    <p class="card-desc">祖母遺留的舊宅中，藏著她當年放棄遠行、選擇留下的秘密。透過殘存的物品，重溫那段時光的記憶。</p>
+                    <button class="action-btn">走進記憶</button>
+                </div>
+            </div>
+            
+            <!-- Game 2 -->
+            <div class="game-card" onclick="transitionTo('game2.html')">
+                <div class="card-thumbnail" style="background-image: url('assets/scenes/mansion_exterior.png'); background-position: center top;">
+                    <span class="badge badge-new">新作</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">《沉默的繼承》</h2>
+                    <div class="card-difficulty">難度：★★★★☆</div>
+                    <p class="card-desc">一份突如其來的遺囑，將你引向荒野中的舊洋館。在鐘聲響起前，你必須找出這家族隱瞞的血脈真相。</p>
+                    <button class="action-btn">走進記憶</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-text">「 選擇一段記憶，走進去。 」</div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('transition-overlay');
+            setTimeout(() => {
+                overlay.classList.add('fade-in');
+            }, 50);
+        });
+
+        function transitionTo(url) {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.classList.remove('fade-in');
+            overlay.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記憶的回聲 - 日系敘事解謎</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+</head>
+<body>
+
+<div id="game-container">
+    <a href="#" class="back-home-btn" onclick="GameController.goHome()">← 返回迴廊</a>
+    <button id="settings-btn" class="settings-btn" onclick="GameController.toggleSettings()" title="設定">⚙️</button>
+
+    <!-- 設定對話框 -->
+    <div id="settings-modal" style="display: none; position: absolute; top: 70px; right: 20px; background: var(--color-vn-box, rgba(59, 47, 47, 0.9)); padding: 20px; border: 2px solid var(--color-accent); z-index: 1000; border-radius: 8px; width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <h3 style="margin-top: 0; color: var(--color-accent); text-align: center; border-bottom: 1px solid var(--color-accent); padding-bottom: 10px;">設定</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span style="color: var(--color-text, #fff);">背景音樂</span>
+            <button id="music-toggle" class="action-btn" onclick="GameController.toggleMusic()" style="padding: 5px 10px;">🔇 關</button>
+        </div>
+        <div style="text-align: center;">
+            <button class="action-btn" onclick="GameController.toggleSettings()">關閉</button>
+        </div>
+    </div>
+
+    <div id="scene-view"></div>
+    <div id="transition-overlay" class="active"></div>
+
+    <!-- VN 對話框 -->
+    <div id="vn-box">
+        <div id="vn-text" class="vn-text"></div>
+        
+        <div id="vn-choices-container" class="vn-choices"></div>
+        
+        <div id="vn-input-container" class="vn-input-area" style="display: none;">
+            <input type="text" id="vn-input" class="input-style" placeholder="請輸入...">
+            <button class="action-btn" id="vn-input-submit">確認</button>
+        </div>
+    </div>
+
+    <!-- 道具欄 -->
+    <div id="inventory-bar">
+        <div class="inventory-title">持有物品</div>
+        <div id="inventory-list" class="inventory-items"></div>
+    </div>
+
+    <!-- 物品說明框 -->
+    <div id="item-modal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--color-vn-box); padding: 20px; border: 2px solid var(--color-accent); z-index: 1000; border-radius: 8px; text-align: center; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
+        <div id="item-modal-icon" style="font-size: 3rem; margin-bottom: 10px;"></div>
+        <div id="item-modal-name" style="font-weight: bold; margin-bottom: 15px; font-size: 1.2rem; border-bottom: 1px solid var(--color-accent); padding-bottom: 5px;"></div>
+        <div id="item-modal-desc" style="line-height: 1.5; margin-bottom: 20px;"></div>
+        <button class="action-btn" onclick="document.getElementById('item-modal').style.display='none'">關閉</button>
+    </div>
+</div>
+
+<script src="js/state.js?v=2"></script>
+<script src="js/scenes.js?v=2"></script>
+<script src="js/game.js?v=2"></script>
+
+</body>
+</html>
