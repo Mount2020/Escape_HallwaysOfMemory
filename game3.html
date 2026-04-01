@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最後一封信 - 記憶的迴廊</title>
+    <!-- Google Fonts for standard text and cursive text -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style3.css?v=2">
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+</head>
+<body>
+
+<div id="game-container">
+    <a href="#" class="back-home-btn" onclick="GameController3.goHome()">← 返回迴廊</a>
+    <button id="settings-btn" class="settings-btn" onclick="GameController3.toggleSettings()" title="設定">⚙️</button>
+
+    <!-- 設定對話框 -->
+    <div id="settings-modal" style="display: none; position: absolute; top: 70px; right: 20px; background: var(--color-vn-box); padding: 20px; border: 2px solid var(--color-accent); z-index: 2500; border-radius: 8px; width: 220px; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <h3 style="margin-top: 0; color: var(--color-accent); text-align: center; border-bottom: 1px solid var(--color-accent); padding-bottom: 10px;">設定</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span style="color: var(--color-text);">背景音樂</span>
+            <button id="music-toggle" class="action-btn" onclick="GameController3.toggleMusic()" style="padding: 5px 10px; width: auto; background-color: var(--color-bg); color: var(--color-text);">🔇 關</button>
+        </div>
+        <div style="text-align: center;">
+            <button class="action-btn" onclick="GameController3.toggleSettings()" style="background-color: var(--color-bg);">關閉</button>
+        </div>
+    </div>
+
+    <!-- 情感進度條 -->
+    <div id="progress-bar-container">
+        <div id="progress-fill"></div>
+    </div>
+
+    <!-- 遊戲場景渲染區 -->
+    <div id="scene-view"></div>
+    
+    <!-- 過場用全黑遮罩 -->
+    <div id="transition-overlay" class="active"></div>
+
+    <!-- 對話框 (Visual Novel 風格) -->
+    <div id="vn-box">
+        <div id="vn-speaker"></div>
+        <div id="vn-text"></div>
+    </div>
+
+    <!-- 下方道具列與選單 -->
+    <div id="bottom-bar">
+        <div id="inventory">
+            <!-- 道具圖示與選擇狀態由 JavaScript 動態生成 -->
+        </div>
+        <button id="diary-btn" onclick="GameController3.toggleDiary()">光的日記</button>
+    </div>
+</div>
+
+<!-- 謎題／選項互動對話框 -->
+<div id="puzzle-modal">
+    <div class="puzzle-content" id="puzzle-content">
+        <!-- 由 JavaScript 動態生成 -->
+    </div>
+</div>
+
+<!-- 專屬：回憶插敘系統 Overlay -->
+<div id="memory-overlay" onclick="GameController3.advanceMemory()">
+    <!-- 對話泡泡由 JavaScript 動態插入 -->
+    <!-- <div class="memory-bubble left">...</div> -->
+    <div class="memory-close-hint">點擊任意處繼續</div>
+</div>
+
+<!-- 專屬：日記本 Modal -->
+<div id="diary-modal" onclick="event.target.id === 'diary-modal' ? GameController3.toggleDiary() : false">
+    <div class="diary-book" id="diary-content">
+        <!-- 日記篇章由 JavaScript 動態插入 -->
+        <!-- <div class="diary-entry"><div class="diary-date">10月12日</div><div class="diary-text">...</div></div> -->
+    </div>
+    <button class="action-btn close-btn" onclick="GameController3.toggleDiary()" style="position: absolute; top: 20px; right: 20px; width: auto; padding: 10px 20px; background-color: var(--color-bg) !important; color: var(--color-text) !important;">關閉日記</button>
+</div>
+
+<script src="js/state3.js?v=6"></script>
+<script src="js/scenes3.js?v=6"></script>
+<script src="js/game3.js?v=6"></script>
+
+</body>
+</html>

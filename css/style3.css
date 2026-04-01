@@ -1,0 +1,233 @@
+/* Game 3: 最後一封信 專屬樣式 */
+:root {
+  --color-bg: #f0f4f8;      /* 霧藍白 */
+  --color-text: #2c3e50;    /* 深墨藍 */
+  --color-accent: #7f8c9a;  /* 灰藍 */
+  --color-memory: #2d2d2d;  /* 回憶場景底色 */
+  --color-overlay: rgba(240, 244, 248, 0.90);
+  --color-vn-box: rgba(240, 244, 248, 0.85); /* 對話框底色 */
+  --color-black-overlay: rgba(0, 0, 0, 0.85);
+}
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: 'Noto Serif JP', serif;
+    background-color: #000;
+    overflow: hidden;
+    user-select: none;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+}
+
+#scene-view {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1.5s ease-in-out;
+}
+
+/* 頂部導航按鈕 */
+.back-home-btn {
+    position: absolute; top: 20px; left: 20px;
+    color: var(--color-bg); text-decoration: none;
+    font-size: 1.1rem; padding: 8px 15px;
+    border: 1px solid var(--color-accent);
+    border-radius: 4px; background-color: rgba(44, 62, 80, 0.7);
+    z-index: 1000; transition: 0.2s; letter-spacing: 0.1em;
+}
+.back-home-btn:hover { background-color: var(--color-accent); color: var(--color-bg); }
+
+.settings-btn {
+    position: absolute; top: 20px; right: 20px;
+    color: var(--color-bg); text-decoration: none;
+    font-size: 1.2rem; padding: 6px 12px;
+    border: 1px solid var(--color-accent);
+    border-radius: 4px; background-color: rgba(44, 62, 80, 0.7);
+    z-index: 1000; transition: 0.2s; cursor: pointer;
+}
+.settings-btn:hover { background-color: var(--color-accent); color: var(--color-bg); }
+
+/* 下方狀態列 */
+#bottom-bar {
+    position: absolute; bottom: 0; left: 0; width: calc(100% - 60px);
+    height: 70px; background-color: rgba(44, 62, 80, 0.8);
+    display: flex; align-items: center; padding: 0 20px;
+    z-index: 900; box-sizing: border-box;
+}
+
+#inventory { display: flex; gap: 15px; flex-grow: 1; }
+
+.item-slot {
+    width: 50px; height: 50px; border: 1px solid rgba(240, 244, 248, 0.3);
+    border-radius: 4px; background-size: cover; background-position: center;
+    cursor: pointer; position: relative;
+}
+.item-slot:hover::after {
+    content: attr(data-name); position: absolute; bottom: 100%; left: 50%;
+    transform: translateX(-50%); background: var(--color-bg);
+    color: var(--color-text); padding: 4px 8px; border-radius: 4px;
+    font-size: 0.8rem; white-space: nowrap; margin-bottom: 5px;
+    pointer-events: none;
+}
+.item-slot.selected { border-color: var(--color-bg); box-shadow: 0 0 10px rgba(240, 244, 248, 0.5); }
+
+/* 日記按鈕 */
+#diary-btn {
+    padding: 10px 20px; background-color: var(--color-bg);
+    color: var(--color-text); border: none; border-radius: 4px;
+    font-family: inherit; font-size: 1rem; cursor: pointer;
+    letter-spacing: 0.1em; transition: 0.2s;
+    display: none; /* 初始隱藏，解鎖後顯示 */
+    position: relative;
+}
+#diary-btn:hover { background-color: var(--color-accent); color: var(--color-bg); }
+
+/* 日記更新提醒動畫 */
+#diary-btn.has-new::after {
+    content: ''; position: absolute; top: -5px; right: -5px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background-color: #e74c3c;
+    box-shadow: 0 0 8px #e74c3c;
+    animation: pulseBadge 1.5s infinite;
+}
+@keyframes pulseBadge {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+/* 視覺小說對話框 */
+#vn-box {
+    position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%);
+    width: 80%; max-width: 800px; min-height: 120px;
+    background-color: var(--color-vn-box); border: 2px solid var(--color-accent);
+    border-radius: 4px; padding: 20px 30px; box-sizing: border-box;
+    display: none; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    color: var(--color-text);
+}
+#vn-speaker { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; color: var(--color-accent); }
+#vn-text { font-size: 1.2rem; line-height: 1.6; letter-spacing: 0.05em; }
+
+/* 互動熱區 */
+.hotspot {
+    position: absolute; border: 2px solid transparent; border-radius: 4px;
+    cursor: pointer; transition: all 0.3s ease;
+}
+.hotspot:hover {
+    border-color: rgba(240, 244, 248, 0.8); background-color: rgba(240, 244, 248, 0.1);
+    box-shadow: 0 0 15px rgba(240, 244, 248, 0.3);
+}
+
+/* 謎題 Modal */
+#puzzle-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--color-black-overlay);
+    display: none; justify-content: center; align-items: center; z-index: 2000;
+}
+.puzzle-content {
+    background-color: var(--color-bg); padding: 40px; border-radius: 8px;
+    text-align: center; border: 2px solid var(--color-accent);
+    max-width: 500px; width: 90%; color: var(--color-text);
+}
+.puzzle-content h3 { margin-top: 0; color: var(--color-text); font-size: 1.5rem; border-bottom: 1px solid var(--color-accent); padding-bottom: 15px; }
+.puzzle-content p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
+.puzzle-actions { display: flex; flex-direction: column; gap: 15px; }
+.puzzle-input { padding: 10px; font-size: 1.2rem; text-align: center; border: 1px solid var(--color-accent); border-radius: 4px; font-family: inherit; }
+.puzzle-btn { padding: 12px; background-color: var(--color-text); color: var(--color-bg); border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
+.puzzle-btn:hover { background-color: var(--color-accent); }
+.close-btn { background-color: transparent !important; color: var(--color-text) !important; border: 1px solid var(--color-text) !important; margin-top: 10px; }
+
+/* 情感進度條 */
+#progress-bar-container {
+    position: absolute; right: 20px; top: 80px; width: 8px;
+    height: 60vh; background-color: rgba(44, 62, 80, 0.3);
+    border-radius: 10px; box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    z-index: 900; display: flex; flex-direction: column; justify-content: flex-end;
+}
+#progress-fill {
+    width: 100%; height: 0%; 
+    background: linear-gradient(to top, var(--color-accent), #f0f4f8);
+    border-radius: 10px; transition: height 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 0 15px rgba(240, 244, 248, 0.8), 0 0 5px rgba(240, 244, 248, 0.5);
+    position: relative;
+}
+.progress-icon {
+    display: none !important;
+}
+
+/* 回憶插敘系統 */
+#memory-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--color-memory); z-index: 3000;
+    display: none; flex-direction: column; align-items: center; padding-top: 50px;
+    opacity: 0; transition: opacity 1s ease-in-out;
+    overflow-y: auto; overflow-x: hidden;
+}
+#memory-overlay.active { display: flex; opacity: 1; }
+
+.memory-bubble {
+    max-width: 60%; padding: 15px 20px; border-radius: 20px;
+    margin-bottom: 20px; font-size: 1.2rem; line-height: 1.5;
+    opacity: 0; transform: translateY(20px); transition: all 0.6s ease;
+}
+.memory-bubble.show { opacity: 1; transform: translateY(0); }
+
+/* 光的訊息（左側） */
+.memory-bubble.left {
+    align-self: flex-start; margin-left: 20%;
+    background-color: rgba(127, 140, 154, 0.2); border: 1px solid var(--color-accent);
+    color: #e0e0e0;
+}
+
+/* 蒼的訊息（右側） */
+.memory-bubble.right {
+    align-self: flex-end; margin-right: 20%;
+    background-color: var(--color-bg); color: var(--color-text);
+}
+
+.memory-close-hint {
+    margin-top: 40px; color: var(--color-accent); font-size: 0.9rem;
+    letter-spacing: 0.1em; cursor: pointer; opacity: 0; transition: opacity 1s;
+}
+
+/* 日記本 Modal */
+#diary-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--color-black-overlay); display: none;
+    justify-content: center; align-items: center; z-index: 2100;
+}
+.diary-book {
+    background-color: #faf5ed; /* 舊紙張顏色 */
+    width: 80%; max-width: 600px; height: 70vh;
+    padding: 40px; border-radius: 4px; box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    overflow-y: auto; color: #3d3b38;
+}
+.diary-entry {
+    margin-bottom: 40px; border-bottom: 1px dashed #ccc; padding-bottom: 20px;
+}
+.diary-date {
+    font-size: 1.1rem; color: #888; margin-bottom: 15px; font-style: italic;
+}
+.diary-text {
+    font-family: 'Klee One', 'SetoFont', 'Tangerine', cursive, serif; 
+    /* 盡量使用手寫體或襯線體來模擬手寫 */
+    font-size: 1.35rem; line-height: 1.8; letter-spacing: 0.05em;
+}
+
+/* 其他小工具 */
+#transition-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #000; z-index: 5000;
+    transition: opacity 1.5s ease-in-out; pointer-events: none; opacity: 0;
+}
+#transition-overlay.fade-out { opacity: 0; }
+#transition-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* 動作按鈕樣式 (遊戲卡片上用的) */
+.action-btn { font-family: inherit; font-size: 1.05rem; padding: 10px 0; width: 100%; background-color: transparent; color: var(--color-text); border: 1px solid var(--color-text); border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.1em; }
+.action-btn:hover { background-color: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
