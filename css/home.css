@@ -198,3 +198,26 @@ body, html {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 0.8; }
 }
+
+/* RWD for mobile */
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .game-title {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+    .main-content {
+        padding: 20px 10px;
+    }
+    .game-card {
+        width: 90%;
+        max-width: 320px;
+    }
+    .card-content {
+        min-height: auto;
+    }
+}

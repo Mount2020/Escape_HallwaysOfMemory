@@ -231,3 +231,64 @@ body, html {
 /* 動作按鈕樣式 (遊戲卡片上用的) */
 .action-btn { font-family: inherit; font-size: 1.05rem; padding: 10px 0; width: 100%; background-color: transparent; color: var(--color-text); border: 1px solid var(--color-text); border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.1em; }
 .action-btn:hover { background-color: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+
+/* RWD for mobile */
+@media (max-width: 768px) {
+    #vn-box {
+        bottom: 80px;
+        width: 95%;
+        padding: 15px;
+    }
+    #vn-text {
+        font-size: 1.05rem;
+    }
+    #bottom-bar {
+        width: 100%;
+        padding: 0 10px;
+    }
+    .item-slot {
+        width: 40px;
+        height: 40px;
+    }
+    #diary-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    #progress-bar-container {
+        right: 10px;
+        top: 60px;
+        height: 45vh;
+    }
+    .puzzle-content {
+        padding: 20px;
+        width: 90%;
+    }
+    .puzzle-content h3 {
+        font-size: 1.2rem;
+    }
+    .memory-bubble {
+        max-width: 85%;
+        font-size: 1rem;
+    }
+    .memory-bubble.left {
+        margin-left: 5%;
+    }
+    .memory-bubble.right {
+        margin-right: 5%;
+    }
+    .diary-book {
+        width: 95%;
+        padding: 20px;
+    }
+    .diary-text {
+        font-size: 1.1rem;
+    }
+    .back-home-btn {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+    .settings-btn {
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+}
